@@ -3,12 +3,14 @@
     window.hasRun = true;
 
     const msg_types = ['play', 'stop', 'speed', 'settings'];
+    let audioElem = null;
 
     const handleApiResponse = response => {
-        let audioElem = document.createElement('audio');
+        audioElem = document.createElement('audio');
         audioElem.src = response;
         audioElem.autoplay = true;
         document.body.appendChild(audioElem);
+        console.log("I played the audioElem");
     }
     const handleRApiesponseError = error => console.error(`Background script response error: ${error}`);
 
@@ -19,10 +21,13 @@
 
     const playButton = () => {
         let userSelectedText = document.getSelection().toString();
+        console.log(userSelectedText);
         playSound(userSelectedText);
     }
 
     const stopButton = () => {
+      //get audio by id using document.get
+        audioElem.pause();
         console.log('stahp');
     }
 
@@ -34,7 +39,7 @@
         console.log('sendings');
     }
 
-    let handlePlayerInput = cmd => {  
+    let handlePlayerInput = cmd => {
         switch(cmd) {
             case 'play':
                 playButton();
@@ -54,9 +59,9 @@
     };
 
     browser.runtime.onMessage.addListener(message => {
-        if(msg_types.includes(message.cmd)) { 
+        if(msg_types.includes(message.cmd)) {
             handlePlayerInput(message.cmd);
-            // respond({response: `We are content and hear you loud and clear. You just said ${message.cmd}.`}); 
+            // respond({response: `We are content and hear you loud and clear. You just said ${message.cmd}.`});
         }
         else { return false; }
     });

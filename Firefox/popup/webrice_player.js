@@ -42,13 +42,14 @@ const listenForClicks = () => {
         let action = '';
 
         if      (tags['play'].includes(targetId))       { action = 'play'; }
+        //replace this one by replay 
         else if (tags['stop'].includes(targetId))       { action = 'stop'; }
         else if (tags['speed'].includes(targetId))      { action = 'speed'; }
         else if (tags['settings'].includes(targetId))   { action = 'settings'; }
 
-        if(action !== '') { 
+        if(action !== '') {
             controlRouter(action);
-            action = ''; 
+            action = '';
         }
     });
 }
