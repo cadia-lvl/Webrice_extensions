@@ -2,15 +2,19 @@
     if (window.hasRun) { return; }
     window.hasRun = true;
 
-    const msg_types = ['play', 'stop', 'speed', 'settings'];
+    const msg_types = ['play', 'stop', 'speed', 'settings', 'replay'];
     let audioElem = null;
+    let playstat = false;
+    console.log("playstat is  ", playstat);
 
+    
     const handleApiResponse = response => {
         audioElem = document.createElement('audio');
         audioElem.src = response;
         audioElem.autoplay = true;
         document.body.appendChild(audioElem);
-        console.log("I played the audioElem");
+        playstat = true;
+
     }
     const handleRApiesponseError = error => console.error(`Background script response error: ${error}`);
 
@@ -23,16 +27,22 @@
         let userSelectedText = document.getSelection().toString();
         console.log(userSelectedText);
         playSound(userSelectedText);
+
+
     }
 
     const stopButton = () => {
       //get audio by id using document.get
         audioElem.pause();
+        audioElem.currentTime=0;
+        console.log("current time ",audioElem.currentTime);
+        audioElem.play();
         console.log('stahp');
     }
 
     const speedButton = () => {
         console.log('sped');
+
     }
 
     const settingsButton = () => {
