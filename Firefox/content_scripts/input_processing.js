@@ -7,7 +7,7 @@
     let playstat = false;
     console.log("playstat is  ", playstat);
 
-    
+
     const handleApiResponse = response => {
         audioElem = document.createElement('audio');
         audioElem.src = response;
@@ -34,14 +34,14 @@
     const stopButton = () => {
       //get audio by id using document.get
         audioElem.pause();
-        audioElem.currentTime=0;
+        //audioElem.currentTime=0;
         console.log("current time ",audioElem.currentTime);
-        audioElem.play();
         console.log('stahp');
     }
 
     const speedButton = () => {
         console.log('sped');
+        audioElem.play();
 
     }
 
