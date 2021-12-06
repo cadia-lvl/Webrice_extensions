@@ -57,6 +57,14 @@
   #webricePlayButton {
     border-radius: 0.15rem 0.15rem 0 0;
   }
+
+  #webricePauseButton {
+    border-radius: 0.15rem 0.15rem 0 0;
+  }
+}
+
+.hide {
+    display: none
 }
 
 @media (min-width: 200px) {

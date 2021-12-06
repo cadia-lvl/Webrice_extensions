@@ -1,8 +1,9 @@
+
 (function() {
     if (window.hasRun) { return; }
     window.hasRun = true;
 
-    const msg_types = ['play', 'stop', 'speed', 'settings', 'replay'];
+    const msg_types = ['play','pause', 'stop', 'speed', 'settings', 'replay'];
     let audioElem = null;
     let playstat = false;
     console.log("playstat is  ", playstat);
@@ -28,6 +29,16 @@
         console.log(userSelectedText);
         playSound(userSelectedText);
 
+        // if playing
+        // playbutton = get element with id playelement
+        // pausebutton  get element with id pause pauseelement
+        // playbutton.removeclass("hide")
+        // pausebutton.addClasslist('hide')
+        // pauseSound
+
+        // if not playing
+
+
 
     }
 
@@ -43,6 +54,7 @@
         console.log('sped');
         audioElem.play();
 
+
     }
 
     const settingsButton = () => {
@@ -52,6 +64,9 @@
     let handlePlayerInput = cmd => {
         switch(cmd) {
             case 'play':
+                playButton();
+                break;
+            case 'pause':
                 playButton();
                 break;
             case 'stop':
