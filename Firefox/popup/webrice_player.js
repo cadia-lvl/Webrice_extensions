@@ -26,7 +26,7 @@ const tags = {
 //hide pause icon in the begining
 var PauseIconState = document.getElementById("webricePauseIcon");
 PauseIconState.classList.add("hide");
-console.log (" Pause is ",PauseIconState);
+//console.log (" Pause is ",PauseIconState);
 
 
 var PlayIconState = document.getElementById("webricePlayIcon");
@@ -49,6 +49,32 @@ const controlRouter = action => {
         .catch(handleTabQueryError);
 }
 
+const VerifyStopState = () => {
+
+    console.log('verified state');
+    if (PlayIconState.classList.contains("hide"))
+      PlayIconState.classList.replace("hide","appear");
+
+      if (PauseIconState.classList.contains("appear"))
+        PauseIconState.classList.replace("appear","hide");
+}
+
+const VerifyPlayState = () => {
+
+    console.log('Play verified state');
+    //play first time
+    PlayIconState.classList.add("appear","hide");
+    console.log (" Play second is ",PlayIconState);
+    //if it stopped then play from begining
+    if (PlayIconState.classList.contains("appear"))
+      {PlayIconState.classList.replace("appear","hide");
+      console.log (" Play after stop is ",PlayIconState);}
+
+    if (PauseIconState.classList.contains("hide"))
+    PauseIconState.classList.add("appear");
+
+}
+
 const listenForClicks = () => {
     document.addEventListener('click', e => {
         const targetId = e.target.id;
@@ -56,25 +82,20 @@ const listenForClicks = () => {
 
         if      (tags['play'].includes(targetId))       {
           action = 'play';
-          PlayIconState.classList.add("hide");
-          console.log ("PlayIconState from play mode is",PlayIconState);
-          PauseIconState.classList.add("appear");
-          console.log ("PauseIconState from play mode is",PauseIconState);}
+          console.log (" Play first is ",PlayIconState);
+          VerifyPlayState();
+          }
         //replace this one by replay
 
         else if (tags['pause'].includes(targetId))       {
         action = 'pause';
         PlayIconState.classList.toggle("hide");
-        console.log ("PlayIconState from pause mode is",PlayIconState);
         PauseIconState.classList.toggle("appear");
-        console.log ("PauseIconState from pause mode is",PauseIconState);}
+        }
 
         else if (tags['stop'].includes(targetId))       {
         action = 'stop';
-        //PlayIconState.classList.toggle("appear");
-        //PauseIconState.classList.toggle("hide");
-        PauseIconState.classList.add("hide");
-        PlayIconState.classList.add("appear");
+        VerifyStopState();
       }
 
         else if (tags['speed'].includes(targetId))      { action = 'speed'; }

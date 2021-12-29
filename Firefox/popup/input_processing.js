@@ -53,7 +53,7 @@
 
     const stopButton = () => {
         audioElem.currentTime=0;
-        audioElem.play();
+        audioElem.pause();
         console.log('stahp');
 
     }
