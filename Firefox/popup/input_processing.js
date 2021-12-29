@@ -6,7 +6,14 @@
     const msg_types = ['play','pause', 'stop', 'speed', 'settings', 'replay'];
     let audioElem = null;
     let playstat = false;
-    console.log("playstat is  ", playstat);
+
+  /*  document.documentElement.style.setProperty('--id-icon', 'webricePlayIcon');
+    var valueP =  getComputedStyle(document.documentElement).getPropertyValue('--id-icon');
+    console.log ("Value P 1 is ",valueP);
+
+    document.documentElement.style.setProperty('--display-pause', 'none');
+    var valueD =  getComputedStyle(document.documentElement).getPropertyValue('--display-pause');
+    console.log ("Icon pause 1 is ",valueD);*/
 
 
     const handleApiResponse = response => {
@@ -16,12 +23,22 @@
         document.body.appendChild(audioElem);
         playstat = true;
 
+        document.documentElement.style.setProperty('--id-icon', 'webricePauseIcon');
+        valueP = getComputedStyle(document.documentElement).getPropertyValue('--id-icon');
+        console.log ("Value P 2 is ",valueP);
+
     }
+
+
+
+
+
     const handleRApiesponseError = error => console.error(`Background script response error: ${error}`);
 
     const playSound = text => {
         browser.runtime.sendMessage({ cmd: 'tts', content: text })
             .then(handleApiResponse, handleRApiesponseError);
+
     }
 
     const playButton = () => {
@@ -29,25 +46,18 @@
         console.log(userSelectedText);
         playSound(userSelectedText);
 
-        // if playing
-        // playbutton = get element with id playelement
-        // pausebutton  get element with id pause pauseelement
-        // playbutton.removeclass("hide")
-        // pausebutton.addClasslist('hide')
-        // pauseSound
-
-        // if not playing
-
-
-
     }
 
     const stopButton = () => {
       //get audio by id using document.get
         audioElem.pause();
         //audioElem.currentTime=0;
-        console.log("current time ",audioElem.currentTime);
+        //console.log("current time ",audioElem.currentTime);
         console.log('stahp');
+
+        document.documentElement.style.setProperty('--id-icon', 'webricePlayIcon');
+        valueP = getComputedStyle(document.documentElement).getPropertyValue('--id-icon');
+        console.log ("Value P 3 is ",valueP);
     }
 
     const speedButton = () => {

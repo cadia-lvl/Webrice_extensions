@@ -23,6 +23,11 @@ const tags = {
     ]
 };
 
+//hide pause icon in the begining
+var PauseIconState = document.getElementById("webricePauseIcon");
+PauseIconState.classList.toggle("hide");
+console.log (" Pause is ",PauseIconState);
+
 const handleInputResponse = message => { console.log(`*Content script response*`); }
 const handleInputResponseError = error => console.error(`Content script response error: ${error}`);
 
@@ -46,9 +51,17 @@ const listenForClicks = () => {
         const targetId = e.target.id;
         let action = '';
 
-        if      (tags['play'].includes(targetId))       { action = 'play'; }
+        if      (tags['play'].includes(targetId))       {
+          action = 'play';
+          var PlayIconState = document.getElementById("webricePlayIcon");
+          PlayIconState.classList.toggle("hide");
+          PauseIconState.classList.toggle("appear");}
+
         //replace this one by replay
-        else if (tags['pause'].includes(targetId))       { action = 'pause'; }
+        else if (tags['pause'].includes(targetId))       {
+        action = 'pause';
+        PlayIconState.classList.toggle("appear");
+        PauseIconState.classList.toggle("hide");}
         else if (tags['stop'].includes(targetId))       { action = 'stop'; }
         else if (tags['speed'].includes(targetId))      { action = 'speed'; }
         else if (tags['settings'].includes(targetId))   { action = 'settings'; }
@@ -61,6 +74,6 @@ const listenForClicks = () => {
 }
 
 const reportExecuteScriptError = error => { console.error(error); }
-browser.tabs.executeScript({file: '/content_scripts/input_processing.js'})
+browser.tabs.executeScript({file: 'input_processing.js'})
     .then(listenForClicks)
     .catch(reportExecuteScriptError);
