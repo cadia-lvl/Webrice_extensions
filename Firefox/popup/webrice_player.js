@@ -25,8 +25,11 @@ const tags = {
 
 //hide pause icon in the begining
 var PauseIconState = document.getElementById("webricePauseIcon");
-PauseIconState.classList.toggle("hide");
+PauseIconState.classList.add("hide");
 console.log (" Pause is ",PauseIconState);
+
+
+var PlayIconState = document.getElementById("webricePlayIcon");
 
 const handleInputResponse = message => { console.log(`*Content script response*`); }
 const handleInputResponseError = error => console.error(`Content script response error: ${error}`);
@@ -53,16 +56,27 @@ const listenForClicks = () => {
 
         if      (tags['play'].includes(targetId))       {
           action = 'play';
-          var PlayIconState = document.getElementById("webricePlayIcon");
-          PlayIconState.classList.toggle("hide");
-          PauseIconState.classList.toggle("appear");}
-
+          PlayIconState.classList.add("hide");
+          console.log ("PlayIconState from play mode is",PlayIconState);
+          PauseIconState.classList.add("appear");
+          console.log ("PauseIconState from play mode is",PauseIconState);}
         //replace this one by replay
+
         else if (tags['pause'].includes(targetId))       {
         action = 'pause';
-        PlayIconState.classList.toggle("appear");
-        PauseIconState.classList.toggle("hide");}
-        else if (tags['stop'].includes(targetId))       { action = 'stop'; }
+        PlayIconState.classList.toggle("hide");
+        console.log ("PlayIconState from pause mode is",PlayIconState);
+        PauseIconState.classList.toggle("appear");
+        console.log ("PauseIconState from pause mode is",PauseIconState);}
+
+        else if (tags['stop'].includes(targetId))       {
+        action = 'stop';
+        //PlayIconState.classList.toggle("appear");
+        //PauseIconState.classList.toggle("hide");
+        PauseIconState.classList.add("hide");
+        PlayIconState.classList.add("appear");
+      }
+
         else if (tags['speed'].includes(targetId))      { action = 'speed'; }
         else if (tags['settings'].includes(targetId))   { action = 'settings'; }
 

@@ -9,7 +9,6 @@
 
   /*  document.documentElement.style.setProperty('--id-icon', 'webricePlayIcon');
     var valueP =  getComputedStyle(document.documentElement).getPropertyValue('--id-icon');
-    console.log ("Value P 1 is ",valueP);
 
     document.documentElement.style.setProperty('--display-pause', 'none');
     var valueD =  getComputedStyle(document.documentElement).getPropertyValue('--display-pause');
@@ -25,19 +24,18 @@
 
         document.documentElement.style.setProperty('--id-icon', 'webricePauseIcon');
         valueP = getComputedStyle(document.documentElement).getPropertyValue('--id-icon');
-        console.log ("Value P 2 is ",valueP);
 
     }
-
-
-
 
 
     const handleRApiesponseError = error => console.error(`Background script response error: ${error}`);
 
     const playSound = text => {
+      if (audioElem == null) {
         browser.runtime.sendMessage({ cmd: 'tts', content: text })
-            .then(handleApiResponse, handleRApiesponseError);
+            .then(handleApiResponse, handleRApiesponseError);}
+      else {audioElem.play();
+        console.log("playing from last stop"); }
 
     }
 
@@ -48,16 +46,16 @@
 
     }
 
-    const stopButton = () => {
-      //get audio by id using document.get
+    const pauseButton = () => {
         audioElem.pause();
-        //audioElem.currentTime=0;
-        //console.log("current time ",audioElem.currentTime);
+        console.log("audio paused");
+    }
+
+    const stopButton = () => {
+        audioElem.currentTime=0;
+        audioElem.play();
         console.log('stahp');
 
-        document.documentElement.style.setProperty('--id-icon', 'webricePlayIcon');
-        valueP = getComputedStyle(document.documentElement).getPropertyValue('--id-icon');
-        console.log ("Value P 3 is ",valueP);
     }
 
     const speedButton = () => {
@@ -77,7 +75,7 @@
                 playButton();
                 break;
             case 'pause':
-                playButton();
+                pauseButton();
                 break;
             case 'stop':
                 stopButton();
