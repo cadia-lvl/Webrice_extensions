@@ -26,10 +26,15 @@ const tags = {
 //hide pause icon in the begining
 var PauseIconState = document.getElementById("webricePauseIcon");
 PauseIconState.classList.add("hide");
-//console.log (" Pause is ",PauseIconState);
+
 
 
 var PlayIconState = document.getElementById("webricePlayIcon");
+
+
+//settings
+var SettingsIconState = document.getElementById("webriceSettingsButton");
+console.log (" Trial state play Safa is ",SettingsIconState);
 
 const handleInputResponse = message => { console.log(`*Content script response*`); }
 const handleInputResponseError = error => console.error(`Content script response error: ${error}`);
@@ -64,14 +69,23 @@ const VerifyPlayState = () => {
     console.log('Play verified state');
     //play first time
     PlayIconState.classList.add("appear","hide");
-    console.log (" Play second is ",PlayIconState);
+
     //if it stopped then play from begining
     if (PlayIconState.classList.contains("appear"))
       {PlayIconState.classList.replace("appear","hide");
-      console.log (" Play after stop is ",PlayIconState);}
+      }
 
     if (PauseIconState.classList.contains("hide"))
     PauseIconState.classList.add("appear");
+
+}
+
+const SettingsState = () => {
+  console.log('settings verified state');
+  const settingsOverlay = document.createElement('div');
+  settingsOverlay.setAttribute('id', "overlay");
+  document.body.appendChild(settingsOverlay);
+  console.log('settings overlay is ', settingsOverlay);
 
 }
 
@@ -82,7 +96,6 @@ const listenForClicks = () => {
 
         if      (tags['play'].includes(targetId))       {
           action = 'play';
-          console.log (" Play first is ",PlayIconState);
           VerifyPlayState();
           }
         //replace this one by replay
@@ -99,7 +112,11 @@ const listenForClicks = () => {
       }
 
         else if (tags['speed'].includes(targetId))      { action = 'speed'; }
-        else if (tags['settings'].includes(targetId))   { action = 'settings'; }
+        else if (tags['settings'].includes(targetId))
+        { action = 'settings';
+        //console.log (" Trial state play Safa is ",SettingsIconState.id);
+        SettingsState();
+        }
 
         if(action !== '') {
             controlRouter(action);

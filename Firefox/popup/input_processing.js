@@ -6,13 +6,9 @@
     const msg_types = ['play','pause', 'stop', 'speed', 'settings', 'replay'];
     let audioElem = null;
     let playstat = false;
+    let speedvar = 3.0;
 
-  /*  document.documentElement.style.setProperty('--id-icon', 'webricePlayIcon');
-    var valueP =  getComputedStyle(document.documentElement).getPropertyValue('--id-icon');
 
-    document.documentElement.style.setProperty('--display-pause', 'none');
-    var valueD =  getComputedStyle(document.documentElement).getPropertyValue('--display-pause');
-    console.log ("Icon pause 1 is ",valueD);*/
 
 
     const handleApiResponse = response => {
@@ -34,7 +30,11 @@
       if (audioElem == null) {
         browser.runtime.sendMessage({ cmd: 'tts', content: text })
             .then(handleApiResponse, handleRApiesponseError);}
-      else {audioElem.play();
+      else {
+        //this function controlls the speed 
+        audioElem.playbackRate = speedvar;
+        console.log ("speed is ",audioElem.playbackRate);
+        audioElem.play();
         console.log("playing from last stop"); }
 
     }
@@ -43,6 +43,7 @@
         let userSelectedText = document.getSelection().toString();
         console.log(userSelectedText);
         playSound(userSelectedText);
+
 
     }
 
@@ -60,14 +61,17 @@
 
     const speedButton = () => {
         console.log('sped');
+
+        audioElem.playbackRate = 3.0;
         audioElem.play();
-
-
     }
 
     const settingsButton = () => {
-        console.log('sendings');
+        console.log('settings');
+
     }
+
+
 
     let handlePlayerInput = cmd => {
         switch(cmd) {
